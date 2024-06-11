@@ -26,3 +26,13 @@ jobs:
       - name: Run Flask application
         run: |
           python app.py
+          # Você pode adicionar comandos aqui para fazer as chamadas de teste à sua aplicação Flask
+          
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Update test results
+          commit_user_name: GitHub Actions
+          commit_user_email: actions@github.com
+          branch: main
+          commit_files: .  # Isso adicionará todas as alterações ao commit
