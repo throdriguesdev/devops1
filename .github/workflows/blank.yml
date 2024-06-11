@@ -13,26 +13,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.x
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+      - name: Build the Docker image
+        run: docker build -t my-flask-app .
 
-      - name: Run Flask application
-        run: |
-          python app.py
-          # Você pode adicionar comandos aqui para fazer as chamadas de teste à sua aplicação Flask
-          
-      - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Update test results
-          commit_user_name: GitHub Actions
-          commit_user_email: actions@github.com
-          branch: main
-          commit_files: .  # Isso adicionará todas as alterações ao commit
+      - name: Run the Docker container
+        run: docker run -d -p 5000:5000 my-flask-app
